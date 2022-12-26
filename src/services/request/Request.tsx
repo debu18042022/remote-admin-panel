@@ -18,7 +18,7 @@ export const get = (urls: string, header: HeadersInit, payload?: objI) => {
 };
 
 export const post = (url: string, payload: objI) => {
-  // console.log(payload);
+  console.log(payload);
   const data = JSON.stringify(payload);
   console.log(data);
   const result = fetch(url, {
