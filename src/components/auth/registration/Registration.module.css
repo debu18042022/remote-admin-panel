@@ -1,0 +1,30 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    margin-top: 50px;
+    width: 50%;
+}
+
+.Logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px,
+}
+
+.Logo img {
+    width: 50%;
+    height: 50%;
+}
+
+.registrationButton {
+    margin-top: 20px;
+}
+
+.textField {
+    margin: 10px 0 10px 0;
+}

@@ -1,0 +1,37 @@
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    margin-top: 50px;
+    width: 50%;
+}
+
+.Logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.select {
+    margin: 20px 0 30px 0;
+}
+
+.Message {
+    margin-top: -15px;
+}
+
+.messageValid {
+    color: green;
+}
+
+.messageRequired {
+    color: orange;
+}
+
+.messageInvalid {
+    color: red;
+}
