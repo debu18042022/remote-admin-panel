@@ -48,7 +48,7 @@ const Login = () => {
     if (selectedTab === "Admin") {
       response = post(url, credentials);
     } else {
-      url = "http://remote.local.cedcommerce.com/sub-user/login"
+      url = "http://remote.local.cedcommerce.com/sub-user/login";
       response = post(url, credentials);
     }
     response
@@ -57,7 +57,7 @@ const Login = () => {
         console.log("resData", response);
         if (response.success) {
           sessionStorage.setItem("token", response.data.token);
-          navigate("/panel");
+          navigate("/panel/apps");
         }
       });
   };
@@ -70,13 +70,6 @@ const Login = () => {
               src="https://d3vlhkqyz4y38a.cloudfront.net/skin/frontend/cedcomnew/default/images/header/logo/ced-logo-web.svg"
               id="icon-auth"
               alt="User Icon"
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                width: "50%",
-                height: "50%",
-              }}
             />
           </div>
           <Tabs
@@ -144,6 +137,7 @@ const Login = () => {
             </div> */}
             <TextField
               name="password"
+              type="password"
               onChange={(e) => getpassword(e)}
               placeHolder="Enter password"
               value={credentials.password}
@@ -157,7 +151,7 @@ const Login = () => {
                 <span className={LoginCss.messageInvalid}>invalid</span>
               )}
             </div> */}
-            <div style={{ display: "flex", alignItems: "start", gap: "20px" }}>
+            <div className={LoginCss.buttons}>
               <Button
                 content="Login"
                 halign="Equal"

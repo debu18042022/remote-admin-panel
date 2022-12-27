@@ -1,29 +1,32 @@
 import { NewSidebar } from "@cedcommerce/ounce-ui";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const AsideBar = () => {
+  const navigate = useNavigate();
   const menu = [
     {
-      id: "dashboard",
-      content: "Dashboard",
+      id: "tokenManager",
+      content: "Token Manager",
+      path: "/panel/tokenmanager",
       //  icon: home,
     },
     {
-      id: "Profile",
-      content: "Profile",
-      path: "/panel/profiling",
+      id: "appManager",
+      content: "App Manager",
+      path: "/panel/apps",
       // icon: box,
     },
     {
-      id: "products",
-      content: "Products",
-      path: "/panel/products",
+      id: "subUsers",
+      content: "Sub Users",
+      path: "/panel/subusers",
       // icon: note,
     },
     {
-      id: "order",
-      content: "Orders",
-      path: "/panel/order",
+      id: "acl",
+      content: "ACL",
+      path: "/panel/acl",
       // icon: bag,
     },
     {
@@ -41,36 +44,36 @@ const AsideBar = () => {
     },
   ];
 
-  const subMenu = [
-    {
-      id: "FAQ",
-      content: "FAQ",
-      path: "/panel/faq",
-      // icon: home,
-    },
-    {
-      id: "HELP",
-      content: "HELP",
-      path: "/panel/help",
-      // icon: box,
-    },
-    {
-      id: "QRY",
-      content: "QRY",
-      path: "/panel/QRY",
-      // icon: home,
-    },
-  ];
+  // const subMenu = [
+  //   {
+  //     id: "FAQ",
+  //     content: "FAQ",
+  //     path: "/panel/faq",
+  //     // icon: home,
+  //   },
+  //   {
+  //     id: "HELP",
+  //     content: "HELP",
+  //     path: "/panel/help",
+  //     // icon: box,
+  //   },
+  //   {
+  //     id: "QRY",
+  //     content: "QRY",
+  //     path: "/panel/QRY",
+  //     // icon: home,
+  //   },
+  // ];
 
   return (
     <div>
-      <aside style={{ border: "1px solid red",width:""}}>
+      <aside style={{ border: "1px solid red", width: "" }}>
         <NewSidebar
           // logo={logos}
           // mobileLogo={mlogo}
           menu={menu}
-          subMenu={subMenu}
-          // onChange={onChange}
+          // subMenu={subMenu}
+          onChange={(e: any) => navigate(e?.path ?? "/panel/error")}
         />
       </aside>
     </div>
