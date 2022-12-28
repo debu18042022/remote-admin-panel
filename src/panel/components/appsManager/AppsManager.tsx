@@ -6,19 +6,21 @@ import {
   TextStyles,
 } from "@cedcommerce/ounce-ui";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import App from "../../../App";
 import { deleteRequest, get } from "../../../services/request/Request";
 import AppsManagerCss from "./AppsManager.module.css";
 
 const AppsManager = () => {
+  const navigate = useNavigate();
   const [appsData, setAppsData] = useState<any>();
   const getAllApps = () => {
     const url = "http://remote.local.cedcommerce.com/webapi/rest/v1/apps";
     const response = get(url);
-    response.then((response) => {
-      console.log("res", response);
-      if (response.success) {
-        setAppsData(response);
+    response.then((res) => {
+      console.log("res", res);
+      if (res.success) {
+        setAppsData(res);
       }
     });
   };
@@ -38,23 +40,16 @@ const AppsManager = () => {
     });
   };
 
+  const createNewApp = () => {
+    navigate("/panel/apps/registration");
+  };
+
   console.log("appsData", appsData);
   return (
     <div>
       <div className={AppsManagerCss.appContainer}>
         <div className={AppsManagerCss.appInnerContainer}>
-          {/* <div className={AppsManagerCss.appContiner__Nav} >
-            <TextStyles
-              alignment="left"
-              fontweight="bold"
-              textcolor="dark"
-              type="SubHeading"
-              utility="none"
-            >
-              AppsManager
-            </TextStyles>
-            <Button content="Create New App" type="Primary" />
-          </div> */}
+
           <FlexLayout halign="fill">
             <TextStyles
               alignment="left"
@@ -65,7 +60,11 @@ const AppsManager = () => {
             >
               Apps
             </TextStyles>
-            <Button content="Create New App" type="Primary" />
+            <Button
+              content="Create New App"
+              type="Primary"
+              onClick={createNewApp}
+            />
           </FlexLayout>
 
           <ul className={AppsManagerCss.cardList}>

@@ -67,7 +67,7 @@ const AsideBar = () => {
 
   return (
     <div>
-      <aside style={{ border: "1px solid red", width: "" }}>
+      <aside>
         <NewSidebar
           // logo={logos}
           // mobileLogo={mlogo}
@@ -78,6 +78,6 @@ const AsideBar = () => {
       </aside>
     </div>
   );
-};
+}; 
 
 export default AsideBar;

@@ -1,13 +1,23 @@
-import { Card } from "@cedcommerce/ounce-ui";
+import { Avatar, Card, FlexLayout } from "@cedcommerce/ounce-ui";
 import React from "react";
 
 const Navbar = () => {
-  return <div>
+  return (
     <div>
       <Card>
+        <FlexLayout halign="end">
+          <img src="" alt="" />
+          <Avatar
+            color="blue"
+            image=""
+            size="large"
+            text="Jon Doe"
+            type="circle"
+          />
+        </FlexLayout>
       </Card>
     </div>
-  </div>;
+  );
 };
 
 export default Navbar;
