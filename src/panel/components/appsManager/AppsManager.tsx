@@ -72,7 +72,7 @@ const AppsManager = () => {
               appsData.data.map((item: any, index: number) => {
                 return (
                   <li key={index} className={AppsManagerCss.cardList__item}>
-                    <Card>
+                    <Card cardType="Shadowed">
                       <div className={AppsManagerCss.cardList__itemTitle}>
                         <FlexLayout halign="fill">
                           <div>

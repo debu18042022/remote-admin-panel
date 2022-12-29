@@ -15,8 +15,8 @@ import { get } from "../../../services/request/Request";
 
 const AppRegistration = () => {
   const navigate = useNavigate();
-  const [webHookOptions, setWebHookOptions] = useState([]);
-  const [selectedWebHookOptions, setSelectedWebHookOptions] = useState([]);
+  const [webHookOptions, setWebHookOptions] = useState<string[]>([]);
+  const [popOverActive, setPopOverActive] = useState<boolean>(false);
   const opt = [
     {
       label: "hours",
@@ -35,6 +35,13 @@ const AppRegistration = () => {
       console.log("getAllWebHooks", res);
       if (res.success) {
         setWebHookOptions(res.Webhooks.shopify);
+
+        let webHooksArray = [...res.Webhooks.shopify];
+        webHooksArray.forEach((object: any) => {
+          object["checked"] = false;
+        });
+        console.log("webHooksArray", webHooksArray);
+        setWebHookOptions(webHooksArray);
       }
     });
   };
@@ -42,11 +49,13 @@ const AppRegistration = () => {
     getAllWebHooks();
   }, []);
 
-  const getAllSelectedWebHookOptions = (index: number) => {
-    const temp = [...selectedWebHookOptions];
-    temp.push(webHookOptions[index]);
-    console.log(temp);
-    setSelectedWebHookOptions(temp);
+  const getAllSelectedWebHookOptions = (checkedIndex: number) => {
+    const temp = [...webHookOptions];
+    temp &&
+      temp.map((object: any, indx: number) => {
+        if (checkedIndex === indx) object.checked = !object.checked;
+      });
+    setWebHookOptions(temp);
   };
 
   return (
@@ -159,7 +168,7 @@ const AppRegistration = () => {
               </Card>
             </FlexChild>
             <FlexChild desktopWidth="75">
-              <Card>
+              <Card cardType="Shadowed">
                 <FlexLayout direction="vertical" spacing="loose">
                   <TextField placeHolder="App Name" />
                   <TextField placeHolder="App Location" />
@@ -182,7 +191,9 @@ const AppRegistration = () => {
                     <Popover
                       activator={
                         <Button
-                          onClick={function noRefCheck() {}}
+                          onClick={() => {
+                            setPopOverActive(!popOverActive);
+                          }}
                           length="fullBtn"
                           type="Secondary"
                         >
@@ -193,12 +204,12 @@ const AppRegistration = () => {
                       onClose={function noRefCheck() {}}
                       popoverContainer="body"
                       popoverWidth={250}
-                      open={true}
+                      open={popOverActive}
                     >
                       <FlexLayout direction="vertical" spacing="loose">
                         {webHookOptions &&
                           webHookOptions.map((item: any, index: number) => {
-                            return selectedWebHookOptions.length > 0 ? (
+                            return (
                               <CheckBox
                                 key={index}
                                 // description="Checkbox Descripion"
@@ -208,23 +219,8 @@ const AppRegistration = () => {
                                 onClick={() =>
                                   getAllSelectedWebHookOptions(index)
                                 }
-                                checked
+                                checked={item.checked}
                               />
-                            ) : (
-                              selectedWebHookOptions.map(
-                                (i: any, index: number) => {
-                                  return // <CheckBox
-                                  //   key={index}
-                                  //   // description="Checkbox Descripion"
-                                  //   id={item.code}
-                                  //   labelVal={item.topic}
-                                  //   name="Name"
-                                  //   onClick={() =>
-                                  //     getAllSelectedWebHookOptions(index)
-                                  //   }
-                                  // />
-                                }
-                              )
                             );
                           })}
                       </FlexLayout>
@@ -246,7 +242,7 @@ const AppRegistration = () => {
               </Card>
             </FlexChild>
             <FlexChild desktopWidth="75">
-              <Card>
+              <Card cardType="Shadowed">
                 <FlexLayout>
                   <FlexChild desktopWidth="33">
                     <TextStyles fontweight="bold" content="app_key" />
@@ -273,7 +269,7 @@ const AppRegistration = () => {
               </Card>
             </FlexChild>
             <FlexChild desktopWidth="75">
-              <Card>
+              <Card cardType="Shadowed">
                 <FlexLayout>
                   <FlexChild desktopWidth="33">
                     <TextStyles fontweight="bold" content="app_key" />
