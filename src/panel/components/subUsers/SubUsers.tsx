@@ -4,6 +4,7 @@ import {
   FlexChild,
   FlexLayout,
   Grid,
+  PageHeader,
   TextStyles,
 } from "@cedcommerce/ounce-ui";
 import React, { useEffect, useState } from "react";
@@ -39,16 +40,26 @@ const SubUsers = () => {
           getSubUsers();
         }
       });
-    } else {
-      // const payload = { status: proceed.status, userId: proceed.userId };
-      // const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/subuser-status-change`;
-      // const response = post();
+    }
+    if (proceed.actionPerform === "blockSubUser") {
+      const payload = { status: proceed.status, userId: proceed.userId };
+      const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/subuser-status-change`;
+      const response = post(url, payload);
       // response.then((res) => {
       //   console.log(res);
       //   if (res.success) {
       //     getSubUsers();
       //   }
       // });
+
+      response
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("resData", response);
+          if (response.success) {
+            getSubUsers();
+          }
+        });
     }
   }, [proceed]);
 
@@ -98,82 +109,76 @@ const SubUsers = () => {
   console.log("subUsers", subUsers);
 
   return (
-    <div>
-      <>
-        <ModalComponent
-          isModalOpen={isModalOpen}
-          setIsModalOpen={setIsModalOpen}
-          proceedDelete={proceedDelete}
+    <>
+      <ModalComponent
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        proceedDelete={proceedDelete}
+      />
+      <PageHeader
+        action={
+          <Button
+            content="Create Sub User"
+            type="Primary"
+            onClick={() => navigate("/panel/subusers/registration")}
+          />
+        }
+        title="Create App"
+      />
+      <Card cardType="Shadowed">
+        <Grid
+          columns={
+            column &&
+            column.map((item) => {
+              return {
+                align: "left",
+                dataIndex: item.dataIndex,
+                key: item.dataIndex,
+                title: item.title,
+                width: 100,
+              };
+            })
+          }
+          dataSource={subUsers.map((item: any) => {
+            return {
+              name: item.username,
+              email: item.email,
+              created_at: item.created_at,
+              key: item._id,
+              action: (
+                <FlexLayout spacing="extraTight">
+                  <Button thickness="extraThin">Edit</Button>
+                  {item.status === "active" ? (
+                    <Button
+                      thickness="extraThin"
+                      onClick={() => blockSubUser("inactive", item._id)}
+                    >
+                      Block
+                    </Button>
+                  ) : (
+                    <Button
+                      thickness="extraThin"
+                      onClick={() => blockSubUser("active", item._id)}
+                    >
+                      unblock
+                    </Button>
+                  )}
+
+                  <Button
+                    thickness="extraThin"
+                    type="Danger"
+                    onClick={() => removeSubUser(item.username)}
+                  >
+                    Delete
+                  </Button>
+                </FlexLayout>
+              ),
+            };
+          })}
+          scrollY={300}
         />
-      </>
-      <div style={{ padding: "20px" }}>
-        <FlexLayout direction="vertical" spacing="extraLoose">
-          <FlexChild>
-            <FlexLayout halign="fill">
-              <TextStyles
-                alignment="left"
-                fontweight="extraBolder"
-                textcolor="dark"
-                type="SubHeading"
-                utility="none"
-              >
-                Create App
-              </TextStyles>
-              <Button
-                content="Create Sub User"
-                type="Primary"
-                onClick={() => navigate("/panel/subusers/registration")}
-              />
-            </FlexLayout>
-          </FlexChild>
-          <FlexChild>
-            <Card cardType="Shadowed">
-              <Grid
-                columns={
-                  column &&
-                  column.map((item) => {
-                    return {
-                      align: "left",
-                      dataIndex: item.dataIndex,
-                      key: item.dataIndex,
-                      title: item.title,
-                      width: 100,
-                    };
-                  })
-                }
-                dataSource={subUsers.map((item: any) => {
-                  return {
-                    name: item.username,
-                    email: item.email,
-                    created_at: item.created_at,
-                    key: item._id,
-                    action: (
-                      <FlexLayout spacing="extraTight">
-                        <Button thickness="extraThin">Edit</Button>
-                        <Button
-                          thickness="extraThin"
-                          onClick={() => blockSubUser(item.status, item._id)}
-                        >
-                          Block
-                        </Button>
-                        <Button
-                          thickness="extraThin"
-                          type="Danger"
-                          onClick={() => removeSubUser(item.username)}
-                        >
-                          Delete
-                        </Button>
-                      </FlexLayout>
-                    ),
-                  };
-                })}
-                scrollY={300}
-              />
-            </Card>
-          </FlexChild>
-        </FlexLayout>
-      </div>
-    </div>
+      </Card>
+    </>
   );
 };
 

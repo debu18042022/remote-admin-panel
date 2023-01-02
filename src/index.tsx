@@ -5,12 +5,15 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "@cedcommerce/ounce-ui/dist/index.css";
 import { BrowserRouter } from "react-router-dom";
+import { AppWrapper } from "@cedcommerce/ounce-ui";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <BrowserRouter>
-    <App />
+    {/* <AppWrapper> */}
+      <App />
+    {/* </AppWrapper> */}
   </BrowserRouter>
 );
 

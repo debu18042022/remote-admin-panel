@@ -12,10 +12,9 @@ import { useNavigate } from "react-router-dom";
 const SubUserRegistration = () => {
   const navigate = useNavigate();
   return (
-    <div>
-      <div style={{ padding: "20px" }}>
+    <>
         <FlexLayout direction="vertical" spacing="extraLoose">
-          <FlexChild>
+          {/* <FlexChild> */}
             <FlexLayout halign="fill">
               <TextStyles
                 alignment="left"
@@ -32,7 +31,7 @@ const SubUserRegistration = () => {
                 onClick={() => navigate("/panel/subusers")}
               />
             </FlexLayout>
-          </FlexChild>
+          {/* </FlexChild> */}
           <Card extraClass="" cardType="Shadowed">
             <FlexLayout direction="vertical" spacing="loose">
               <TextField
@@ -56,12 +55,9 @@ const SubUserRegistration = () => {
                 type="password"
               />
             </FlexLayout>
-
-            
           </Card>
         </FlexLayout>
-      </div>
-    </div>
+    </>
   );
 };
 

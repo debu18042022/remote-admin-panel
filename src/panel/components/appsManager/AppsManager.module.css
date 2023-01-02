@@ -1,5 +1,5 @@
-.appContainer {
-    /* border: 1px solid black; */
+/* .appContainer {
+    border: 1px solid black;
     width: 100%;
 }
 
@@ -10,7 +10,6 @@
 .appContiner__Nav {
     display: flex;
     justify-content: space-between;
-    /* padding: 18px; */
 }
 
 .cardList {
@@ -22,4 +21,4 @@
 
 .cardList__item {
     width: 470px;
-}
+} */

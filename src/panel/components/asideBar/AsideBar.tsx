@@ -78,6 +78,6 @@ const AsideBar = () => {
       </aside>
     </div>
   );
-}; 
+};
 
 export default AsideBar;

@@ -1,4 +1,4 @@
-import { FlexChild, FlexLayout } from "@cedcommerce/ounce-ui";
+import { BodyLayout, FlexChild, FlexLayout } from "@cedcommerce/ounce-ui";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Acl from "./components/acl/Acl";
@@ -16,43 +16,22 @@ const Panel = () => {
   return (
     <div>
       <Navbar />
-      {/* <div style={{ display: "flex", gap: "250px" }}>
-        <div style={{}}>
-          <AsideBar />
-        </div>
-        <div style={{ width: "100%" }}>
-          <Routes>
-            <Route path="tokenmanager" element={<TokenManager />} />
-            <Route path="apps" element={<AppsManager />} />
-            <Route path="subusers" element={<SubUsers />} />
-            <Route path="acl" element={<Acl />} />
-            <Route path="apps/registration" element={<AppRegistration />} />
-            <Route path="*" element={<Navigate to={"/panel/error"} />} />
-            <Route path="error" element={<Error />} />
-          </Routes>
-        </div>
-      </div> */}
-
-      <FlexLayout>
-        <FlexChild desktopWidth="20">
-          <AsideBar />
-        </FlexChild>
-        <FlexChild desktopWidth="80">
-          <Routes>
-            <Route path="tokenmanager" element={<TokenManager />} />
-            <Route path="apps" element={<AppsManager />} />
-            <Route path="subusers" element={<SubUsers />} />
-            <Route path="acl" element={<Acl />} />
-            <Route path="apps/registration" element={<AppRegistration />} />
-            <Route
-              path="subusers/registration"
-              element={<SubUserRegistration />}
-            />
-            <Route path="*" element={<Navigate to={"/panel/error"} />} />
-            <Route path="error" element={<Error />} />
-          </Routes>
-        </FlexChild>
-      </FlexLayout>
+      <AsideBar />
+      <BodyLayout>
+        <Routes>
+          <Route path="tokenmanager" element={<TokenManager />} />
+          <Route path="apps" element={<AppsManager />} />
+          <Route path="subusers" element={<SubUsers />} />
+          <Route path="acl" element={<Acl />} />
+          <Route path="apps/registration" element={<AppRegistration />} />
+          <Route
+            path="subusers/registration"
+            element={<SubUserRegistration />}
+          />
+          <Route path="*" element={<Navigate to={"/panel/error"} />} />
+          <Route path="error" element={<Error />} />
+        </Routes>
+      </BodyLayout>
     </div>
   );
 };

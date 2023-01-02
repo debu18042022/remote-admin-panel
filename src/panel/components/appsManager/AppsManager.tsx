@@ -2,7 +2,9 @@ import {
   Badge,
   Button,
   Card,
+  FlexChild,
   FlexLayout,
+  PageHeader,
   TextStyles,
 } from "@cedcommerce/ounce-ui";
 import React, { useEffect, useState } from "react";
@@ -46,104 +48,83 @@ const AppsManager = () => {
 
   console.log("appsData", appsData);
   return (
-    <div>
-      <div className={AppsManagerCss.appContainer}>
-        <div className={AppsManagerCss.appInnerContainer}>
+    <>
+      <PageHeader
+        action={
+          <Button
+            content="Create New App"
+            type="Primary"
+            onClick={createNewApp}
+          />
+        }
+        title=" Apps"
+      />
 
-          <FlexLayout halign="fill">
-            <TextStyles
-              alignment="left"
-              fontweight="extraBolder"
-              textcolor="dark"
-              type="SubHeading"
-              utility="none"
-            >
-              Apps
-            </TextStyles>
-            <Button
-              content="Create New App"
-              type="Primary"
-              onClick={createNewApp}
-            />
-          </FlexLayout>
-
-          <ul className={AppsManagerCss.cardList}>
-            {appsData &&
-              appsData.data.map((item: any, index: number) => {
-                return (
-                  <li key={index} className={AppsManagerCss.cardList__item}>
-                    <Card cardType="Shadowed">
-                      <div className={AppsManagerCss.cardList__itemTitle}>
-                        <FlexLayout halign="fill">
-                          <div>
-                            <TextStyles
-                              alignment="left"
-                              fontweight="bold"
-                              textcolor="dark"
-                              type="Heading"
-                              utility="none"
-                            >
-                              {item.name}
-                            </TextStyles>
-                            <Badge
-                              helpText="Tooltip Help Text"
-                              position="bottom"
-                              size="small"
-                              type="Neutral-200"
-                            >
-                              Under Development
-                            </Badge>
-                          </div>
-                          <FlexLayout halign="fill" spacing="tight">
-                            <Button
-                              content="edit"
-                              // icon={<Home color="#ffffff" size={20} />}
-                              iconAlign="left"
-                              type="Outlined"
-                            />
-                            <Button
-                              content="delete"
-                              // icon={<Home color="#ffffff" size={20} />}
-                              iconAlign="right"
-                              type="Outlined"
-                              onClick={() => removeApp(item.id)}
-                            />
-                          </FlexLayout>
-                        </FlexLayout>
-                      </div>
-                      <hr />
-                      <div>
-                        <TextStyles
-                          alignment="left"
-                          fontweight="bold"
-                          textcolor="dark"
-                          type="SubHeading"
-                          utility="none"
-                        >
-                          App Id : N/A
-                        </TextStyles>
-                      </div>
-                      <hr />
-                      <div>
-                        <TextStyles
-                          alignment="left"
-                          fontweight="bold"
-                          textcolor="dark"
-                          type="SubHeading"
-                          utility="none"
-                        >
-                          About :
-                        </TextStyles>
-                      </div>
-                      <hr />
-                    </Card>
-                  </li>
-                );
-              })}
-          </ul>
-        </div>
-      </div>
-    </div>
+      {appsData &&
+        appsData.data.map((item: any, index: number) => {
+          return (
+            <Card cardType="Shadowed">
+              <FlexLayout halign="fill">
+                <div>
+                  <TextStyles
+                    alignment="left"
+                    fontweight="bold"
+                    textcolor="dark"
+                    type="Heading"
+                    utility="none"
+                  >
+                    {item.name}
+                  </TextStyles>
+                  <Badge
+                    helpText="Tooltip Help Text"
+                    position="bottom"
+                    size="small"
+                    type="Neutral-200"
+                  >
+                    {item.status}
+                  </Badge>
+                </div>
+                <FlexLayout halign="fill" spacing="tight">
+                  <Button
+                    content="edit"
+                    // icon={<Home color="#ffffff" size={20} />}
+                    iconAlign="left"
+                    type="Outlined"
+                  />
+                  <Button
+                    content="delete"
+                    // icon={<Home color="#ffffff" size={20} />}
+                    iconAlign="right"
+                    type="Outlined"
+                    onClick={() => removeApp(item.id)}
+                  />
+                </FlexLayout>
+              </FlexLayout>
+              <hr />
+              <TextStyles
+                alignment="left"
+                fontweight="bold"
+                textcolor="dark"
+                type="SubHeading"
+                utility="none"
+              >
+                App Id : N/A
+              </TextStyles>
+              <hr />
+              <TextStyles
+                alignment="left"
+                fontweight="bold"
+                textcolor="dark"
+                type="SubHeading"
+                utility="none"
+              >
+                About :
+              </TextStyles>
+              <hr />
+            </Card>
+          );
+        })}
+    </>
   );
 };
 
