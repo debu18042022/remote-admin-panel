@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { get, post } from "../../../services/request/Request";
 import ModalComponent from "../modal/ModalComponent";
+import ToastComponent from "../toast/ToastComponent";
 
 const SubUsers = () => {
   const navigate = useNavigate();
@@ -22,11 +23,19 @@ const SubUsers = () => {
     status: "",
     userId: "",
     actionPerform: "",
+    message: "",
+  });
+  const [toast, setToast] = useState({
+    toastMessage: "",
+    toastType: "",
+    toastActive: false,
   });
 
-  const proceedDelete = () => {
-    console.log("proceed delete run");
+  const handleProceed = () => {
+    // alert("proceed");
+    // console.log("proceed delete run");
     setProceed({ ...proceed, open: true });
+    setToast({ ...toast, toastActive: true });
   };
 
   useEffect(() => {
@@ -37,6 +46,7 @@ const SubUsers = () => {
       const response = get(url, payload);
       response.then((res) => {
         if (res.success) {
+          setToast({ ...toast, toastMessage: res.message });
           getSubUsers();
         }
       });
@@ -45,18 +55,12 @@ const SubUsers = () => {
       const payload = { status: proceed.status, userId: proceed.userId };
       const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/subuser-status-change`;
       const response = post(url, payload);
-      // response.then((res) => {
-      //   console.log(res);
-      //   if (res.success) {
-      //     getSubUsers();
-      //   }
-      // });
-
       response
-        .then((response) => response.json())
-        .then((response) => {
-          console.log("resData", response);
-          if (response.success) {
+        .then((res) => res.json())
+        .then((res) => {
+          console.log("resData", res);
+          if (res.success) {
+            setToast({ ...toast, toastMessage: res.message });
             getSubUsers();
           }
         });
@@ -92,6 +96,7 @@ const SubUsers = () => {
       status: "",
       userId: "",
       actionPerform: "removeSubUser",
+      message: "Are you sure want to remove the user?",
     });
   };
 
@@ -103,18 +108,24 @@ const SubUsers = () => {
       status: status,
       userId: userId,
       actionPerform: "blockSubUser",
+      message: `Are you sure want to ${status} the User?`,
     });
   };
 
-  console.log("subUsers", subUsers);
+  const handleToast = () => {
+    setToast({ ...toast, toastActive: false });
+  };
 
+  console.log("subUsers", subUsers);
   return (
     <>
       <ModalComponent
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        proceedDelete={proceedDelete}
+        handleProceed={handleProceed}
+        proceed={proceed}
       />
+      <ToastComponent toast={toast} handleToast={handleToast} />
       <PageHeader
         action={
           <Button

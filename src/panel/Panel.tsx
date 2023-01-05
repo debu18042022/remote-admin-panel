@@ -2,6 +2,7 @@ import { BodyLayout, FlexChild, FlexLayout } from "@cedcommerce/ounce-ui";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import Acl from "./components/acl/Acl";
+import AppEdit from "./components/appEdit/AppEdit";
 import AppRegistration from "./components/appRegistration/AppRegistration";
 import AppsManager from "./components/appsManager/AppsManager";
 import AsideBar from "./components/asideBar/AsideBar";
@@ -24,6 +25,7 @@ const Panel = () => {
           <Route path="subusers" element={<SubUsers />} />
           <Route path="acl" element={<Acl />} />
           <Route path="apps/registration" element={<AppRegistration />} />
+          <Route path="apps/edit" element={<AppEdit />} />
           <Route
             path="subusers/registration"
             element={<SubUserRegistration />}

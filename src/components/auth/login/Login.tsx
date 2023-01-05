@@ -20,6 +20,7 @@ type Auth = {
 };
 
 const Login = () => {
+  sessionStorage.clear();
   const navigate = useNavigate();
   const [credentials, setCredentials] = useState<Auth>({
     username: "",
@@ -29,8 +30,8 @@ const Login = () => {
   const [result, setResult] = useState<boolean>(false);
   const getusername = (value: string) => {
     setCredentials({ ...credentials, username: value });
-    const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    setResult(expression.test(value));
+    // const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
+    // setResult(expression.test(value));
   };
   const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string>("Admin");
@@ -45,19 +46,22 @@ const Login = () => {
   };
 
   const submitHandler = () => {
-    let url = "http://remote.local.cedcommerce.com/user/login";
     let response;
+    let url;
     if (selectedTab === "Admin") {
-      response = post(url, credentials);
+      url = `http://remote.local.cedcommerce.com/user/login`;
+      // response = post(url, credentials);
     } else {
       url = "http://remote.local.cedcommerce.com/sub-user/login";
-      response = post(url, credentials);
+      // response = post(url, credentials);
     }
+    response = post(url, credentials);
     response
       .then((response) => response.json())
       .then((response) => {
         console.log("resData", response);
         if (response.success) {
+          // alert("success");
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("loginStatus", response.success);
           navigate("/panel/apps");

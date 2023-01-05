@@ -11,7 +11,7 @@ import {
   TextStyles,
 } from "@cedcommerce/ounce-ui";
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { get, put } from "../../../services/request/Request";
 import ToastComponent from "../toast/ToastComponent";
 
@@ -31,8 +31,9 @@ type generalDetailsCredentialsI = {
   sandbox: {};
   live: {};
 };
-const AppRegistration = () => {
+const AppEdit = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [webHookOptions, setWebHookOptions] = useState<string[]>([]);
   const [popOverActive, setPopOverActive] = useState<boolean>(false);
   const [keysMarketPlace, setKeysMarketPlace] = useState<any>([]);
@@ -47,7 +48,7 @@ const AppRegistration = () => {
       group_code: "",
       app_code: "",
       marketPlaceHandler: "",
-      marketPlace: "shopify",
+      marketPlace: "",
       app_eraseData: "",
       app_duration: "",
       app_quantity: "",
@@ -60,6 +61,8 @@ const AppRegistration = () => {
     toastType: "",
     toastActive: false,
   });
+
+  console.log("location value", location?.state?.id);
 
   useEffect(() => {
     setGeneralDetailsCredentials({
@@ -269,29 +272,43 @@ const AppRegistration = () => {
   };
 
   useEffect(() => {
+    const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/apps`;
+    const payload = { id: location?.state?.id };
+    const response = get(url, payload);
+    response.then((res) => {
+      console.log("Edit response", res);
+      if (res.success) {
+        handleMarketPlaceChange(res.data.marketPlace);
+        console.log(res.data.live);
+        setAppDetailsInput({ ...res.data.live });
+        setSandBoxDetailsInput({ ...res.data.sandbox });
+        setGeneralDetailsCredentials({ ...res.data });
+        // Object.keys(res.data.live).forEach((item) => {
+        //   console.log(item);
+        // });
+      }
+    });
+
     dropDown();
-    if (Object.keys(appDetailsInput).length === 0) {
-      handleMarketPlaceChange("shopify");
-    }
+    // if (Object.keys(appDetailsInput).length === 0) {
+    //    handleMarketPlaceChange("shopify");
+    //   console.log("shopify");
+    // }
   }, []);
 
+  console.log("generalDetailsCredentials", generalDetailsCredentials);
+  console.log("appDetailsInput", appDetailsInput);
+
   const handleMarketPlaceChange = (val: string) => {
-    // alert(val);
     setGeneralDetailsCredentials({
       ...generalDetailsCredentials,
       marketPlace: val,
     });
-    // let temp: any = { ...appDetailsInput };
-    let temp = {};
+    let temp: any = { ...appDetailsInput };
     Object.keys(marketPlacesArray).forEach((e: string) => {
       if (val === e) {
-        console.log("marketPlacesArray[e]", marketPlacesArray[e]);
         Object.keys(marketPlacesArray[e]).forEach((item: any) => {
           if (marketPlacesArray[e][item].length > 1) {
-            console.log(
-              "marketPlacesArray[e][item]",
-              marketPlacesArray[e][item]
-            );
             marketPlacesArray[e][item].map((i: any) => {
               temp = { ...temp, [i]: "" };
             });
@@ -299,13 +316,10 @@ const AppRegistration = () => {
         });
       }
     });
-    console.log("temp", temp);
-    setAppDetailsInput({ ...temp });
-    setSandBoxDetailsInput({ ...temp });
+    temp = { ...temp };
+    setAppDetailsInput({ ...appDetailsInput, ...temp });
+    setSandBoxDetailsInput({ ...sandBoxDetailsInput, ...temp });
   };
-
-  console.log("appDetailsInput", appDetailsInput);
-  console.log("sandBoxDetailsInput", sandBoxDetailsInput);
 
   const getAllWebHooks = () => {
     const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/marketplaceswebhooks`;
@@ -313,7 +327,8 @@ const AppRegistration = () => {
     response.then((res) => {
       console.log("getAllWebHooks", res);
       if (res.success) {
-        // setWebHookOptions(res.Webhooks.shopify);
+        setWebHookOptions(res.Webhooks.shopify);
+
         let webHooksArray = [...res.Webhooks.shopify];
         webHooksArray.forEach((object: any) => {
           object["checked"] = false;
@@ -396,7 +411,7 @@ const AppRegistration = () => {
             />
           </FlexLayout>
         }
-        title="Create App"
+        title="Edit App"
       />
 
       <FlexLayout desktopWidth="100" direction="vertical" spacing="extraLoose">
@@ -407,6 +422,7 @@ const AppRegistration = () => {
           mobileWidth="50"
         >
           <Select
+            disabled
             onChange={(e) => {
               handleMarketPlaceChange(e);
             }}
@@ -530,7 +546,6 @@ const AppRegistration = () => {
                     ></Select>
                   </FlexChild>
                 </FlexLayout>
-
                 <FlexLayout spacing="loose">
                   {generalDetailsCredentials.marketPlace === "shopify" ? (
                     <Popover
@@ -591,32 +606,35 @@ const AppRegistration = () => {
               <FlexLayout direction="vertical" spacing="loose">
                 {Object.keys(appDetailsInput).map((item, index) => {
                   return (
-                    <FlexLayout spacing="extraTight" key={index}>
-                      <FlexChild
-                        desktopWidth="25"
-                        tabWidth="25"
-                        mobileWidth="25"
-                      >
-                        <TextStyles fontweight="bold" content={item} />
-                      </FlexChild>
-                      <FlexChild
-                        desktopWidth="75"
-                        tabWidth="75"
-                        mobileWidth="75"
-                      >
-                        <TextField
-                          placeHolder="value"
-                          type="text"
-                          value={appDetailsInput.item}
-                          onChange={(e) => {
-                            setAppDetailsInput({
-                              ...appDetailsInput,
-                              [item]: e,
-                            });
-                          }}
-                        />
-                      </FlexChild>
-                    </FlexLayout>
+                    <>
+                      {console.log("itemmmmsss", appDetailsInput[item])}
+                      <FlexLayout spacing="extraTight" key={index}>
+                        <FlexChild
+                          desktopWidth="25"
+                          tabWidth="25"
+                          mobileWidth="25"
+                        >
+                          <TextStyles fontweight="bold" content={item} />
+                        </FlexChild>
+                        <FlexChild
+                          desktopWidth="75"
+                          tabWidth="75"
+                          mobileWidth="75"
+                        >
+                          <TextField
+                            placeHolder="value"
+                            type="text"
+                            value={appDetailsInput[item]}
+                            onChange={(e) => {
+                              setAppDetailsInput({
+                                ...appDetailsInput,
+                                [item]: e,
+                              });
+                            }}
+                          />
+                        </FlexChild>
+                      </FlexLayout>
+                    </>
                   );
                 })}
               </FlexLayout>
@@ -655,7 +673,7 @@ const AppRegistration = () => {
                           <TextField
                             placeHolder="value"
                             type="text"
-                            value={sandBoxDetailsInput.item}
+                            value={sandBoxDetailsInput[item]}
                             onChange={(e) => {
                               setSandBoxDetailsInput({
                                 ...sandBoxDetailsInput,
@@ -677,4 +695,4 @@ const AppRegistration = () => {
   );
 };
 
-export default AppRegistration;
+export default AppEdit;

@@ -1,4 +1,4 @@
-import { NewSidebar } from "@cedcommerce/ounce-ui";
+import { bag, box, home, NewSidebar, note, setting } from "@cedcommerce/ounce-ui";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -9,61 +9,40 @@ const AsideBar = () => {
       id: "tokenManager",
       content: "Token Manager",
       path: "/panel/tokenmanager",
-      //  icon: home,
+      icon: home,
     },
     {
       id: "appManager",
       content: "App Manager",
       path: "/panel/apps",
-      // icon: box,
+      icon: box,
     },
     {
       id: "subUsers",
       content: "Sub Users",
       path: "/panel/subusers",
-      // icon: note,
+      icon: note,
     },
     {
       id: "acl",
       content: "ACL",
       path: "/panel/acl",
-      // icon: bag,
+      icon: bag,
     },
     {
       id: "configuration",
       content: "Configuration",
       path: "/panel/config",
-      // icon: setting,
+      icon: setting,
       extraClass: "Helloclass",
     },
     {
       id: "queuedtasks",
       content: "Activities",
       path: "/panel/queuedtasks",
-      // icon: box,
+      icon: box,
     },
   ];
-
-  // const subMenu = [
-  //   {
-  //     id: "FAQ",
-  //     content: "FAQ",
-  //     path: "/panel/faq",
-  //     // icon: home,
-  //   },
-  //   {
-  //     id: "HELP",
-  //     content: "HELP",
-  //     path: "/panel/help",
-  //     // icon: box,
-  //   },
-  //   {
-  //     id: "QRY",
-  //     content: "QRY",
-  //     path: "/panel/QRY",
-  //     // icon: home,
-  //   },
-  // ];
 
   return (
     <div>
