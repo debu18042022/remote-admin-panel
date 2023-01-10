@@ -2,8 +2,6 @@ import { Toast, ToastWrapper } from "@cedcommerce/ounce-ui";
 import React from "react";
 
 const ToastComponent = (props: any) => {
-  // console.log(props);
-  // console.log(props.toast.toastActive);
   const { toastActive, toastMessage, toastType } = props.toast;
   return (
     <React.Fragment key=".0">

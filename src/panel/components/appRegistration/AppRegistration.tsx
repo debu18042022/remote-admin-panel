@@ -276,12 +276,10 @@ const AppRegistration = () => {
   }, []);
 
   const handleMarketPlaceChange = (val: string) => {
-    // alert(val);
     setGeneralDetailsCredentials({
       ...generalDetailsCredentials,
       marketPlace: val,
     });
-    // let temp: any = { ...appDetailsInput };
     let temp = {};
     Object.keys(marketPlacesArray).forEach((e: string) => {
       if (val === e) {
@@ -313,7 +311,6 @@ const AppRegistration = () => {
     response.then((res) => {
       console.log("getAllWebHooks", res);
       if (res.success) {
-        // setWebHookOptions(res.Webhooks.shopify);
         let webHooksArray = [...res.Webhooks.shopify];
         webHooksArray.forEach((object: any) => {
           object["checked"] = false;
@@ -545,7 +542,6 @@ const AppRegistration = () => {
                           Select Webhook
                         </Button>
                       }
-                      // dropDownheight={300}
                       onClose={function noRefCheck() {}}
                       popoverContainer="body"
                       popoverWidth={250}
@@ -557,7 +553,6 @@ const AppRegistration = () => {
                             return (
                               <CheckBox
                                 key={index}
-                                // description="Checkbox Descripion"
                                 id={item.code}
                                 labelVal={item.topic}
                                 name="Name"

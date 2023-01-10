@@ -1,10 +1,8 @@
 import {
   Button,
   Card,
-  FlexChild,
   FlexLayout,
   FormElement,
-  Modal,
   Select,
   Tabs,
   TextField,
@@ -26,16 +24,11 @@ const Login = () => {
     username: "",
     password: "",
   });
-  const [open, setOpen] = useState<boolean>(false);
-  const [result, setResult] = useState<boolean>(false);
-  const getusername = (value: string) => {
-    setCredentials({ ...credentials, username: value });
-    // const expression: RegExp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    // setResult(expression.test(value));
-  };
-  const [loading, setLoading] = useState(false);
   const [selectedTab, setSelectedTab] = useState<string>("Admin");
   const [selectedOption, setSelectedOption] = useState<string>();
+  const getusername = (value: string) => {
+    setCredentials({ ...credentials, username: value });
+  };
 
   const getpassword = (value: string) => {
     setCredentials({ ...credentials, password: value });
@@ -50,10 +43,8 @@ const Login = () => {
     let url;
     if (selectedTab === "Admin") {
       url = `http://remote.local.cedcommerce.com/user/login`;
-      // response = post(url, credentials);
     } else {
       url = "http://remote.local.cedcommerce.com/sub-user/login";
-      // response = post(url, credentials);
     }
     response = post(url, credentials);
     response
@@ -61,7 +52,6 @@ const Login = () => {
       .then((response) => {
         console.log("resData", response);
         if (response.success) {
-          // alert("success");
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("loginStatus", response.success);
           navigate("/panel/apps");
@@ -70,7 +60,6 @@ const Login = () => {
   };
   return (
     <FlexLayout halign="center">
-      {/* <FlexChild> */}
       <Card title="">
         <div className={LoginCss.Logo}>
           <img
@@ -81,7 +70,6 @@ const Login = () => {
         </div>
         <Tabs
           alignment="horizontal"
-          // animate="type1"
           onChange={function noRefCheck(id) {
             setSelectedTab(id);
           }}
@@ -97,12 +85,8 @@ const Login = () => {
             },
           ]}
         ></Tabs>
-        {/* <div className={LoginCss.select}> */}
-
-        {/* </div> */}
         <FormElement>
           <Select
-            // dropDownheight={200}
             ellipsis
             onChange={function noRefCheck(value) {
               console.log("value", value);
@@ -133,16 +117,6 @@ const Login = () => {
             placeHolder="Enter username"
             value={credentials.username}
           />
-
-          {/* <div className={LoginCss.Message}>
-              {result ? (
-                <span className={LoginCss.messageValid}>valid</span>
-              ) : credentials.username === "" ? (
-                <span className={LoginCss.messageRequired}>required*</span>
-              ) : (
-                <span className={LoginCss.messageInvalid}>invalid</span>
-              )}
-            </div> */}
           <TextField
             name="password"
             type="password"
@@ -150,16 +124,6 @@ const Login = () => {
             placeHolder="Enter password"
             value={credentials.password}
           />
-          {/* <div className={LoginCss.Message}>
-              {credentials.password.length >= 8 ? (
-                <span className={LoginCss.messageValid}>valid</span>
-              ) : credentials.password === "" ? (
-                <span className={LoginCss.messageRequired}>required*</span>
-              ) : (
-                <span className={LoginCss.messageInvalid}>invalid</span>
-              )}
-            </div> */}
-
           <FlexLayout valign="start" spacing="tight">
             <Button
               content="Login"
@@ -181,7 +145,6 @@ const Login = () => {
           </FlexLayout>
         </FormElement>
       </Card>
-      {/* </FlexChild> */}
     </FlexLayout>
   );
 };

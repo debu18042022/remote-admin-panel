@@ -67,12 +67,20 @@ const SubUserRegistration = () => {
     const response = get(url, payload);
     response.then((res) => {
       const obj: any = {};
-      res.data.resources.map((objectdata: any) => {
-        const mod = objectdata.module;
-        const data = objectdata.hasOwnProperty(objectdata.module);
-        if (data) {
+      const data = res.data.resources;
+      console.log(data);
+      data.map((objectdata: any) => {
+        const moduleResult = obj.hasOwnProperty(objectdata.module);
+        if (moduleResult) {
+          const controllerResult = obj[objectdata.module].hasOwnProperty(
+            objectdata.controller
+          );
+          if (controllerResult) {
+          } else {
+            obj[objectdata.module][objectdata.controller] = {};
+          }
         } else {
-          obj[mod] = {};
+          obj[objectdata.module] = {};
         }
       });
       console.log(obj, "objectsssss");

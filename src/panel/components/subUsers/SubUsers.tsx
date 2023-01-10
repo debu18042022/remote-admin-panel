@@ -1,11 +1,9 @@
 import {
   Button,
   Card,
-  FlexChild,
   FlexLayout,
   Grid,
   PageHeader,
-  TextStyles,
 } from "@cedcommerce/ounce-ui";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -32,8 +30,6 @@ const SubUsers = () => {
   });
 
   const handleProceed = () => {
-    // alert("proceed");
-    // console.log("proceed delete run");
     setProceed({ ...proceed, open: true });
     setToast({ ...toast, toastActive: true });
   };

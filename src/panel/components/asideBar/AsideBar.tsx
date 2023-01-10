@@ -48,10 +48,7 @@ const AsideBar = () => {
     <div>
       <aside>
         <NewSidebar
-          // logo={logos}
-          // mobileLogo={mlogo}
           menu={menu}
-          // subMenu={subMenu}
           onChange={(e: any) => navigate(e?.path ?? "/panel/error")}
         />
       </aside>

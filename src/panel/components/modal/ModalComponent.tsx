@@ -1,10 +1,4 @@
 import { Modal } from "@cedcommerce/ounce-ui";
-
-// type modalPropsI = {
-//   isModalOpen: boolean;
-//   setIsModalOpen: () => void;
-// };
-
 const ModalComponent = (props: any) => {
   const { isModalOpen, setIsModalOpen, handleProceed } = props;
   return (
