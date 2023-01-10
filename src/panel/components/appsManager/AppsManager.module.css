@@ -1,0 +1,24 @@
+/* .appContainer {
+    border: 1px solid black;
+    width: 100%;
+}
+
+.appInnerContainer {
+    padding: 20px;
+}
+
+.appContiner__Nav {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cardList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.cardList__item {
+    width: 470px;
+} */
