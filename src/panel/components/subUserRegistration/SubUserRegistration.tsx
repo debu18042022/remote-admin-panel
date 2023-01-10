@@ -66,27 +66,16 @@ const SubUserRegistration = () => {
     const payload = { group_code: "admin" };
     const response = get(url, payload);
     response.then((res) => {
-      // console.log(res);
-      // console.log(res.data.resources);
       const obj: any = {};
       res.data.resources.map((objectdata: any) => {
-        // const objectdata = res.data.resources[0];
-        // console.log(objectdata, "data");
-
-        // const person = {
-        //   first_name: "Sam",
-        //   last_name: "Bradley",
-        // };
         const mod = objectdata.module;
-        // const data = Object.keys(obj).includes(objectdata.module);
         const data = objectdata.hasOwnProperty(objectdata.module);
-
         if (data) {
         } else {
           obj[mod] = {};
         }
       });
-      console.log(obj, "ooooo");
+      console.log(obj, "objectsssss");
     });
   });
 
