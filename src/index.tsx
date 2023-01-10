@@ -1,16 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
+import '@cedcommerce/ounce-ui/dist/index.css'
+// import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import "@cedcommerce/ounce-ui/dist/index.css";
+
 import { BrowserRouter } from "react-router-dom";
+import { AppWrapper } from "@cedcommerce/ounce-ui";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
   <BrowserRouter>
-    <App />
+    {/* <AppWrapper> */}
+      <App />
+    {/* </AppWrapper> */}
   </BrowserRouter>
 );
 

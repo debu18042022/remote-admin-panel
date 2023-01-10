@@ -1,13 +1,12 @@
 import { Modal } from "@cedcommerce/ounce-ui";
-import React, { useState } from "react";
-type modalPropsI = {
-  isModalOpen: boolean;
-  setIsModalOpen: () => void;
-};
+
+// type modalPropsI = {
+//   isModalOpen: boolean;
+//   setIsModalOpen: () => void;
+// };
 
 const ModalComponent = (props: any) => {
-  const { isModalOpen, setIsModalOpen, proceedDelete } = props;
-
+  const { isModalOpen, setIsModalOpen, handleProceed } = props;
   return (
     <div>
       <Modal
@@ -15,13 +14,14 @@ const ModalComponent = (props: any) => {
         close={() => {
           setIsModalOpen(!isModalOpen);
         }}
-        heading="Small Modal Size"
+        heading="Actions"
         modalSize="small"
         primaryAction={{
           content: "Proceed",
           loading: false,
           onClick: function noRefCheck() {
-            proceedDelete();
+            handleProceed();
+            setIsModalOpen(false);
           },
         }}
         secondaryAction={{
@@ -32,7 +32,7 @@ const ModalComponent = (props: any) => {
           },
         }}
       >
-        This is small modal
+        {props.proceed.message}
       </Modal>
     </div>
   );
