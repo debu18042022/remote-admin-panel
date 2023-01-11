@@ -70,14 +70,18 @@ const SubUserRegistration = () => {
       const data = res.data.resources;
       console.log(data);
       data.map((objectdata: any) => {
+        const action = objectdata.action;
         const moduleResult = obj.hasOwnProperty(objectdata.module);
         if (moduleResult) {
           const controllerResult = obj[objectdata.module].hasOwnProperty(
             objectdata.controller
           );
           if (controllerResult) {
+            obj[objectdata.module][objectdata.controller].push(
+              objectdata.action
+            );
           } else {
-            obj[objectdata.module][objectdata.controller] = {};
+            obj[objectdata.module][objectdata.controller] = [objectdata.action];
           }
         } else {
           obj[objectdata.module] = {};
