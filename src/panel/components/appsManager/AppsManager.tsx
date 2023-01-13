@@ -59,7 +59,7 @@ const AppsManager = () => {
       {appsData &&
         appsData.data.map((item: any, index: number) => {
           return (
-            <Card cardType="Shadowed">
+            <Card cardType="Shadowed" key={index}>
               <FlexLayout halign="fill">
                 <div>
                   <TextStyles

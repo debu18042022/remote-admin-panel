@@ -143,14 +143,14 @@ const SubUsers = () => {
               };
             })
           }
-          dataSource={subUsers.map((item: any) => {
+          dataSource={subUsers.map((item: any, index: number) => {
             return {
               name: item.username,
               email: item.email,
               created_at: item.created_at,
               key: item._id,
               action: (
-                <FlexLayout spacing="extraTight">
+                <FlexLayout spacing="extraTight" key={index}>
                   <Button thickness="extraThin">Edit</Button>
                   {item.status === "active" ? (
                     <Button
