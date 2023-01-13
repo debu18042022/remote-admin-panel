@@ -7,13 +7,23 @@ const beforeLogin =
 
 const afterLogin = sessionStorage.getItem("token") ?? "sujeet";
 
-export const get = (urls: string, payload?: objI) => {
-  const afterLogin = sessionStorage.getItem("token") ?? "sujeet";
+export const get = (urls: string, payload?: objI, github?: any) => {
+  const afterLogin = sessionStorage.getItem("token") ?? "";
   const url = new URL(urls);
   if (payload) {
     for (let i in payload) {
       url.searchParams.append(i, payload[i]);
     }
+  }
+  if (github === "github") {
+    const result = fetch(url, {
+      method: "GET",
+      headers: {
+        // Authorization: `Bearer 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`,
+        Authorization: `Bearer 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`,
+      },
+    }).then((resData) => resData.json());
+    return result;
   }
   const result = fetch(url, {
     method: "GET",

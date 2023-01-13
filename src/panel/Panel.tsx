@@ -7,6 +7,8 @@ import AppRegistration from "./components/appRegistration/AppRegistration";
 import AppsManager from "./components/appsManager/AppsManager";
 import AsideBar from "./components/asideBar/AsideBar";
 import Error from "./components/Error";
+import GithubManager from "./components/github/githubManager/GithubManager";
+import GithubTeams from "./components/github/githubTeams/GithubTeams";
 import Navbar from "./components/navbar/Navbar";
 import SubUserRegistration from "./components/subUserRegistration/SubUserRegistration";
 import SubUsers from "./components/subUsers/SubUsers";
@@ -30,6 +32,8 @@ const Panel = () => {
             path="subusers/registration"
             element={<SubUserRegistration />}
           />
+          <Route path="githubManager" element={<GithubManager />} />
+          <Route path="gitub/teams" element={<GithubTeams />} />
           <Route path="*" element={<Navigate to={"/panel/error"} />} />
           <Route path="error" element={<Error />} />
         </Routes>

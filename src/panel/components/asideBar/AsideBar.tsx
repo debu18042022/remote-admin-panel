@@ -1,4 +1,11 @@
-import { bag, box, home, NewSidebar, note, setting } from "@cedcommerce/ounce-ui";
+import {
+  bag,
+  box,
+  home,
+  NewSidebar,
+  note,
+  setting,
+} from "@cedcommerce/ounce-ui";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -30,17 +37,18 @@ const AsideBar = () => {
       icon: bag,
     },
     {
+      id: "githubData",
+      content: "Github Manager",
+      path: "/panel/githubManager",
+      icon: note,
+      extraClass: "Helloclass",
+    },
+    {
       id: "configuration",
       content: "Configuration",
       path: "/panel/config",
       icon: setting,
       extraClass: "Helloclass",
-    },
-    {
-      id: "queuedtasks",
-      content: "Activities",
-      path: "/panel/queuedtasks",
-      icon: box,
     },
   ];
 
