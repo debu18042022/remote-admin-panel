@@ -50,7 +50,6 @@ const Login = () => {
     response
       .then((response) => response.json())
       .then((response) => {
-        console.log("resData", response);
         if (response.success) {
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("loginStatus", response.success);
@@ -89,7 +88,6 @@ const Login = () => {
           <Select
             ellipsis
             onChange={function noRefCheck(value) {
-              console.log("value", value);
               setSelectedOption(value);
             }}
             value={selectedOption}

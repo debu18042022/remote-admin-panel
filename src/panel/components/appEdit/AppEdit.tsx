@@ -62,7 +62,6 @@ const AppEdit = () => {
     toastActive: false,
   });
 
-  console.log("location value", location?.state?.id);
 
   useEffect(() => {
     setGeneralDetailsCredentials({
@@ -276,28 +275,17 @@ const AppEdit = () => {
     const payload = { id: location?.state?.id };
     const response = get(url, payload);
     response.then((res) => {
-      console.log("Edit response", res);
       if (res.success) {
         handleMarketPlaceChange(res.data.marketPlace);
-        console.log(res.data.live);
         setAppDetailsInput({ ...res.data.live });
         setSandBoxDetailsInput({ ...res.data.sandbox });
         setGeneralDetailsCredentials({ ...res.data });
-        // Object.keys(res.data.live).forEach((item) => {
-        //   console.log(item);
-        // });
       }
     });
 
     dropDown();
-    // if (Object.keys(appDetailsInput).length === 0) {
-    //    handleMarketPlaceChange("shopify");
-    //   console.log("shopify");
-    // }
   }, []);
 
-  console.log("generalDetailsCredentials", generalDetailsCredentials);
-  console.log("appDetailsInput", appDetailsInput);
 
   const handleMarketPlaceChange = (val: string) => {
     setGeneralDetailsCredentials({
@@ -325,7 +313,6 @@ const AppEdit = () => {
     const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/marketplaceswebhooks`;
     const response = get(url);
     response.then((res) => {
-      console.log("getAllWebHooks", res);
       if (res.success) {
         setWebHookOptions(res.Webhooks.shopify);
 
@@ -333,7 +320,6 @@ const AppEdit = () => {
         webHooksArray.forEach((object: any) => {
           object["checked"] = false;
         });
-        console.log("webHooksArray", webHooksArray);
         setWebHookOptions(webHooksArray);
       }
     });
@@ -354,7 +340,6 @@ const AppEdit = () => {
         }
       });
     setWebHookOptions(temp);
-    console.log(selectedTemp);
     setGeneralDetailsCredentials({
       ...generalDetailsCredentials,
       webhooks: [...selectedTemp],
@@ -364,10 +349,8 @@ const AppEdit = () => {
   const save = () => {
     const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/apps`;
     const payload = generalDetailsCredentials;
-    console.log("payloadddd", payload);
     const response = put(url, payload);
     response.then((res) => {
-      console.log("res put", res);
       if (res.success) {
         setToast({ ...toast, toastMessage: res.message, toastActive: true });
       }
@@ -395,8 +378,6 @@ const AppEdit = () => {
     setToast({ ...toast, toastActive: false });
   };
 
-  console.log("appDetailsInput", appDetailsInput);
-  console.log("sandBoxDetailsInput", sandBoxDetailsInput);
   return (
     <>
       <ToastComponent toast={toast} handleToast={handleToast} />
@@ -560,7 +541,6 @@ const AppEdit = () => {
                           Select Webhook
                         </Button>
                       }
-                      // dropDownheight={300}
                       onClose={function noRefCheck() {}}
                       popoverContainer="body"
                       popoverWidth={250}
@@ -572,7 +552,6 @@ const AppEdit = () => {
                             return (
                               <CheckBox
                                 key={index}
-                                // description="Checkbox Descripion"
                                 id={item.code}
                                 labelVal={item.topic}
                                 name="Name"
@@ -607,7 +586,6 @@ const AppEdit = () => {
                 {Object.keys(appDetailsInput).map((item, index) => {
                   return (
                     <>
-                      {console.log("itemmmmsss", appDetailsInput[item])}
                       <FlexLayout spacing="extraTight" key={index}>
                         <FlexChild
                           desktopWidth="25"

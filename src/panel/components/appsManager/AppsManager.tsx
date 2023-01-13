@@ -17,7 +17,6 @@ const AppsManager = () => {
     const url = "http://remote.local.cedcommerce.com/webapi/rest/v1/apps";
     const response = get(url);
     response.then((res) => {
-      console.log("res", res);
       if (res.success) {
         setAppsData(res);
       }
@@ -32,7 +31,6 @@ const AppsManager = () => {
     const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/apps`;
     const response = deleteRequest(url, removingAppId);
     response.then((response) => {
-      console.log("res delete", response);
       if (response.success) {
         getAllApps();
       }
@@ -44,10 +42,8 @@ const AppsManager = () => {
   };
 
   const Edit = (app_id: number) => {
-    console.log(app_id);
     navigate("/panel/apps/edit", { state: { id: app_id } });
   };
-  console.log("appsData", appsData);
   return (
     <>
       <PageHeader

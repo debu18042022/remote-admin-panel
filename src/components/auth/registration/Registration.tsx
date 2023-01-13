@@ -30,7 +30,6 @@ const Register = () => {
       const response = post(url, credentials);
       response.then((response) => response.json());
       response.then((response) => {
-        console.log("response", response);
         if (response.ok) {
           navigate("/login");
         }

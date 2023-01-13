@@ -2,18 +2,16 @@ import {
   Button,
   Card,
   CheckBox,
-  FlexChild,
   FlexLayout,
   Grid,
   PageHeader,
   TextField,
-  TextStyles,
 } from "@cedcommerce/ounce-ui";
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { get } from "../../../services/request/Request";
-// import {AiFillCheckSquare} from
 const SubUserRegistration = () => {
+  const [aclData, setAclData] = useState<any>({});
   const navigate = useNavigate();
   const [textFieldDisabled, setTextFieldDisabled] = useState<boolean>(false);
   const appTableHeading = [
@@ -53,14 +51,6 @@ const SubUserRegistration = () => {
     frontendUrl: "",
   });
 
-  const [resourcesAray, setResourcesArray] = useState({
-    coreModule: [],
-    shopifyWebApiModule: [],
-    webapiModule: [],
-    coneectorModule: [],
-    apiConnectModule: [],
-  });
-
   useEffect(() => {
     const url = `http://remote.local.cedcommerce.com/acl-group/getRoleResource`;
     const payload = { group_code: "admin" };
@@ -68,7 +58,6 @@ const SubUserRegistration = () => {
     response.then((res) => {
       const obj: any = {};
       const data = res.data.resources;
-      console.log(data);
       data.map((objectdata: any) => {
         const action = objectdata.action;
         const moduleResult = obj.hasOwnProperty(objectdata.module);
@@ -77,20 +66,26 @@ const SubUserRegistration = () => {
             objectdata.controller
           );
           if (controllerResult) {
-            obj[objectdata.module][objectdata.controller].push(
-              objectdata.action
-            );
           } else {
-            obj[objectdata.module][objectdata.controller] = [objectdata.action];
+            obj[objectdata.module][objectdata.controller] = [];
           }
         } else {
           obj[objectdata.module] = {};
         }
       });
-      console.log(obj, "objectsssss");
+      data.map((item: any) => {
+        const modresult = obj.hasOwnProperty(item.module);
+        if (modresult) {
+          const contrresult = obj[item.module].hasOwnProperty(item.controller);
+          if (contrresult) {
+            obj[item.module][item.controller].push(item.action);
+          }
+        }
+      });
+      setAclData(obj);
     });
-  });
-
+  }, []);
+  console.log("aclData------>>>>>>", aclData);
   return (
     <>
       <PageHeader
@@ -111,22 +106,6 @@ const SubUserRegistration = () => {
         title="Create User"
       />
       <FlexLayout direction="vertical" spacing="extraLoose">
-        {/* <FlexLayout halign="fill">
-              <TextStyles
-                alignment="left"
-                fontweight="extraBolder"
-                textcolor="dark"
-                type="SubHeading"
-                utility="none"
-              >
-                Create App
-              </TextStyles>
-              <Button
-                content="Back"
-                type="Primary"
-                onClick={() => navigate("/panel/subusers")}
-              />
-            </FlexLayout> */}
         <Card extraClass="" cardType="Shadowed">
           <FlexLayout direction="vertical" spacing="loose">
             <TextField
@@ -137,6 +116,7 @@ const SubUserRegistration = () => {
               type="text"
             />
             <TextField
+              autocomplete="off"
               name="Email"
               placeHolder="App Email"
               onChange={function noRefCheck() {}}
@@ -200,7 +180,6 @@ const SubUserRegistration = () => {
                   add: (
                     <CheckBox
                       key=""
-                      // description="Checkbox Descripion"
                       id={""}
                       labelVal={""}
                       name="Name"
@@ -223,141 +202,42 @@ const SubUserRegistration = () => {
             <Grid
               columns={[
                 {
-                  align: "center",
+                  // align: "center",
                   dataIndex: "name",
                   key: "name",
-                  title: "Name",
-                  width: 100,
-                },
-                {
-                  align: "center",
-                  dataIndex: "age",
-                  key: "age",
-                  title: "Age",
-                  width: 100,
-                },
-                {
-                  align: "center",
-                  dataIndex: "address",
-                  key: "address",
-                  title: "Address",
-                  width: 100,
+                  // title: "Name",
+                  // width: 100,
                 },
               ]}
-              dataSource={[
-                {
-                  address: "New York No. 1 Lake Park",
-                  age: 60,
-                  children: [
-                    {
-                      address: "New York No. 2 Lake Park",
-                      age: 42,
-                      key: 11,
-                      name: "John Brown",
-                    },
-                    {
-                      address: "New York No. 3 Lake Park",
-                      age: 30,
-                      children: [
-                        {
-                          address: "New York No. 3 Lake Park",
-                          age: 16,
-                          key: 121,
-                          name: "Jimmy Brown",
-                        },
-                      ],
-                      key: 12,
-                      name: "John Brown jr.",
-                    },
-                    {
-                      address: "London No. 1 Lake Park",
-                      age: 72,
-                      children: [
-                        {
-                          address: "London No. 2 Lake Park",
-                          age: 42,
-                          children: [
-                            {
-                              address: "London No. 3 Lake Park",
-                              age: 25,
-                              key: 1311,
-                              name: "Jim Green jr.",
-                            },
-                            {
-                              address: "London No. 4 Lake Park",
-                              age: 18,
-                              key: 1312,
-                              name: "Jimmy Green sr.",
-                            },
-                          ],
-                          key: 131,
-                          name: "Jim Green",
-                        },
-                      ],
-                      key: 13,
-                      name: "Jim Green sr.",
-                    },
-                  ],
-                  key: 1,
-                  name: "John Brown sr.",
-                },
-                {
-                  address: "Sidney No. 1 Lake Park",
-                  age: 32,
-                  key: 2,
-                  name: "Joe Black",
-                  // children: [
-                  //   {
-                  //     address: "New York No. 2 Lake Park",
-                  //     age: 42,
-                  //     key: 11,
-                  //     name: "John Brown",
-                  //   },
-                  //   {
-                  //     address: "New York No. 3 Lake Park",
-                  //     age: 30,
-                  //     children: [
-                  //       {
-                  //         address: "New York No. 3 Lake Park",
-                  //         age: 16,
-                  //         key: 121,
-                  //         name: "Jimmy Brown",
-                  //       },
-                  //     ],
-                  //     key: 12,
-                  //     name: "John Brown jr.",
-                  //   },
-                  //   {
-                  //     address: "London No. 1 Lake Park",
-                  //     age: 72,
-                  //     children: [
-                  //       {
-                  //         address: "London No. 2 Lake Park",
-                  //         age: 42,
-                  //         children: [
-                  //           {
-                  //             address: "London No. 3 Lake Park",
-                  //             age: 25,
-                  //             key: 1311,
-                  //             name: "Jim Green jr.",
-                  //           },
-                  //           {
-                  //             address: "London No. 4 Lake Park",
-                  //             age: 18,
-                  //             key: 1312,
-                  //             name: "Jimmy Green sr.",
-                  //           },
-                  //         ],
-                  //         key: 131,
-                  //         name: "Jim Green",
-                  //       },
-                  //     ],
-                  //     key: 13,
-                  //     name: "Jim Green sr.",
-                  //   },
-                  // ],
-                },
-              ]}
+              dataSource={
+                aclData &&
+                Object.keys(aclData).map((modulee: any, index: any) => {
+                  return {
+                    key: modulee,
+                    children: Object.keys(aclData[modulee]).map(
+                      (controllerr: any, ind: any) => {
+                        return {
+                          key: controllerr,
+                          children: Object.keys(
+                            aclData[modulee][controllerr]
+                          ).map((actionn: any, i: any) => {
+                            return {
+                              key: aclData[modulee][controllerr][actionn],
+                              name: aclData[modulee][controllerr][actionn],
+                            };
+                          }),
+
+                          name: controllerr,
+                        };
+                      }
+                    ),
+                    name: modulee,
+                  };
+                })
+              }
+              rowSelection={{
+                onChange: function noRefCheck() {},
+              }}
             />
           </FlexLayout>
         </Card>

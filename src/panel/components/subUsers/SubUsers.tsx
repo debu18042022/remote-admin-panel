@@ -54,7 +54,6 @@ const SubUsers = () => {
       response
         .then((res) => res.json())
         .then((res) => {
-          console.log("resData", res);
           if (res.success) {
             setToast({ ...toast, toastMessage: res.message });
             getSubUsers();
@@ -74,7 +73,6 @@ const SubUsers = () => {
     const url = `http://remote.local.cedcommerce.com/sub-user/getSubUsers`;
     const response = get(url, payload);
     response.then((res) => {
-      console.log("res", res);
       if (res.success) {
         setSubUsers(res.data.rows);
       }
@@ -112,7 +110,6 @@ const SubUsers = () => {
     setToast({ ...toast, toastActive: false });
   };
 
-  console.log("subUsers", subUsers);
   return (
     <>
       <ModalComponent

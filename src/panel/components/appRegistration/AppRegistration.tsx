@@ -283,13 +283,8 @@ const AppRegistration = () => {
     let temp = {};
     Object.keys(marketPlacesArray).forEach((e: string) => {
       if (val === e) {
-        console.log("marketPlacesArray[e]", marketPlacesArray[e]);
         Object.keys(marketPlacesArray[e]).forEach((item: any) => {
           if (marketPlacesArray[e][item].length > 1) {
-            console.log(
-              "marketPlacesArray[e][item]",
-              marketPlacesArray[e][item]
-            );
             marketPlacesArray[e][item].map((i: any) => {
               temp = { ...temp, [i]: "" };
             });
@@ -297,25 +292,19 @@ const AppRegistration = () => {
         });
       }
     });
-    console.log("temp", temp);
     setAppDetailsInput({ ...temp });
     setSandBoxDetailsInput({ ...temp });
   };
-
-  console.log("appDetailsInput", appDetailsInput);
-  console.log("sandBoxDetailsInput", sandBoxDetailsInput);
 
   const getAllWebHooks = () => {
     const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/marketplaceswebhooks`;
     const response = get(url);
     response.then((res) => {
-      console.log("getAllWebHooks", res);
       if (res.success) {
         let webHooksArray = [...res.Webhooks.shopify];
         webHooksArray.forEach((object: any) => {
           object["checked"] = false;
         });
-        console.log("webHooksArray", webHooksArray);
         setWebHookOptions(webHooksArray);
       }
     });
@@ -336,7 +325,6 @@ const AppRegistration = () => {
         }
       });
     setWebHookOptions(temp);
-    console.log(selectedTemp);
     setGeneralDetailsCredentials({
       ...generalDetailsCredentials,
       webhooks: [...selectedTemp],
@@ -346,10 +334,8 @@ const AppRegistration = () => {
   const save = () => {
     const url = `http://remote.local.cedcommerce.com/webapi/rest/v1/apps`;
     const payload = generalDetailsCredentials;
-    console.log("payloadddd", payload);
     const response = put(url, payload);
     response.then((res) => {
-      console.log("res put", res);
       if (res.success) {
         setToast({ ...toast, toastMessage: res.message, toastActive: true });
       }
@@ -377,8 +363,6 @@ const AppRegistration = () => {
     setToast({ ...toast, toastActive: false });
   };
 
-  console.log("appDetailsInput", appDetailsInput);
-  console.log("sandBoxDetailsInput", sandBoxDetailsInput);
   return (
     <>
       <ToastComponent toast={toast} handleToast={handleToast} />
