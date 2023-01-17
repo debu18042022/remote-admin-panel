@@ -20,7 +20,7 @@ export const get = (urls: string, payload?: objI, github?: any) => {
       method: "GET",
       headers: {
         // Authorization: `Bearer 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`,
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer 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`,
       },
     }).then((resData) => resData.json());
     return result;

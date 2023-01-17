@@ -41,14 +41,12 @@ const AsideBar = () => {
       content: "Github Manager",
       path: "/panel/githubManager",
       icon: note,
-      extraClass: "Helloclass",
     },
     {
       id: "configuration",
       content: "Configuration",
       path: "/panel/config",
       icon: setting,
-      extraClass: "Helloclass",
     },
   ];
 
