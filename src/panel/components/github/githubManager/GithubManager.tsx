@@ -11,6 +11,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { environment } from "../../../../components/auth/environment/Environment";
 import { get } from "../../../../services/request/Request";
+import Githubmodalcomponent from "../githubmodalcomponent/Githubmodalcomponent";
 
 type teamsI = {
   members: string[];
@@ -24,8 +25,8 @@ const GithubManager = () => {
   const [team, setTeams] = useState([]);
   const [repos, setRepos] = useState([]);
   const [selectedTab, setSelectedTab] = useState<string>("");
-  const [flag, setFlag] = useState<number>(0);
-
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [colaborator, setColaborator] = useState<any[]>([]);
   const teamMembersColumn = [
     {
       dataIndex: "name",
@@ -66,10 +67,18 @@ const GithubManager = () => {
       title: "Repository Access Level",
       width: 100,
     },
+    {
+      align: "center",
+      dataIndex: "action",
+      key: "action",
+      title: "Action",
+      width: 100,
+    },
   ];
 
   useEffect(() => {
     getAllTeams();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllTeams = () => {
@@ -95,17 +104,13 @@ const GithubManager = () => {
     const response = get(url, {}, "github");
     response.then((resData) => {
       console.log("members----->", resData);
-      let count = 0;
       let temp = resData;
       temp = resData;
       temp.forEach((obj: any) => {
         obj["membership"] = "";
         obj["view"] = false;
-        count += 1;
       });
       setTeamsInfo({ ...teamsInfo, members: temp });
-      // alert(count);
-      setFlag(count);
     });
   };
 
@@ -130,8 +135,23 @@ const GithubManager = () => {
     });
   };
 
+  const viewRepoColaborator = (repo_name: string) => {
+    const url = `https://api.github.com/repos/${environment.organization}/${repo_name}/collaborators`;
+    const response = get(url, {}, "github");
+    response.then((resData) => {
+      console.log("RepoColaborator----->", resData);
+      setColaborator(resData);
+      setIsModalOpen(!isModalOpen);
+    });
+  };
+
   return (
     <>
+      <Githubmodalcomponent
+        colaborator={colaborator}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+      />
       <PageHeader
         action={
           <Button content="Back" onClick={() => navigate("/panel/apps")} />
@@ -151,7 +171,7 @@ const GithubManager = () => {
         />
       )}
       {repos.length === 0 ? (
-        <Loader type="Loader2"/>
+        <Loader type="Loader2" />
       ) : (
         <FlexLayout
           desktopWidth="100"
@@ -220,13 +240,21 @@ const GithubManager = () => {
               })}
               dataSource={
                 repos &&
-                repos.map((obj: any, index: number) => {
+                repos.map((repo: any, index: number) => {
                   return {
-                    repo_url: <a href={obj.html_url}>{obj.html_url}</a>,
-                    // age: 32,
                     key: index,
-                    name: obj.name,
-                    role: obj.role_name,
+                    name: repo.name,
+                    repo_url: <a href={repo.html_url}>{repo.html_url}</a>,
+                    role: repo.role_name,
+                    action: (
+                      <Button
+                        onClick={() => {
+                          viewRepoColaborator(repo.name);
+                        }}
+                      >
+                        View Colaborators
+                      </Button>
+                    ),
                   };
                 })
               }
@@ -235,47 +263,6 @@ const GithubManager = () => {
           </Card>
         </FlexLayout>
       )}
-      {/* <FlexLayout desktopWidth="100" direction="vertical" spacing="extraLoose">
-        {oganizationData &&
-          oganizationData.map((org: any, index: number) => {
-            return (
-              <Card cardType="Shadowed" key={index}>
-                <FlexLayout halign="fill" halignTab="fill">
-                  <>
-                    <TextStyles
-                      alignment="left"
-                      fontweight="normal"
-                      textcolor="dark"
-                      type="Heading"
-                      utility="none"
-                    >
-                      {org.login}
-                    </TextStyles>
-                    <TextStyles
-                      alignment="left"
-                      fontweight="normal"
-                      textcolor="dark"
-                      type="Heading"
-                      utility="none"
-                    >
-                      Description:{org.description} this is organization
-                    </TextStyles>
-                  </>
-
-                  <Button
-                    onClick={() =>
-                      navigate("/panel/gitub/teams", {
-                        state: { organization: org.login },
-                      })
-                    }
-                  >
-                    View
-                  </Button>
-                </FlexLayout>
-              </Card>
-            );
-          })}
-      </FlexLayout> */}
     </>
   );
 };

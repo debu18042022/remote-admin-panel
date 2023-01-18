@@ -19,8 +19,7 @@ export const get = (urls: string, payload?: objI, github?: any) => {
     const result = fetch(url, {
       method: "GET",
       headers: {
-        // Authorization: `Bearer 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`,
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer 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`,
       },
     }).then((resData) => resData.json());
     return result;
