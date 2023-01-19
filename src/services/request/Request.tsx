@@ -19,7 +19,7 @@ export const get = (urls: string, payload?: objI, github?: any) => {
     const result = fetch(url, {
       method: "GET",
       headers: {
-        Authorization: `Bearer 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`,
+        Authorization: `Bearer ${process.env.REACT_APP_GITHUB_TOKEN}`,
       },
     }).then((resData) => resData.json());
     return result;
